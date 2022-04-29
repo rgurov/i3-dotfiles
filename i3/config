@@ -5,7 +5,7 @@ exec_always --no-startup-id feh --bg-scale $HOME/.wallpapers/mountains.jpg
 exec_always --no-startup-id picom
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
-bindsym $mod+d exec rofi -show run
+bindsym $mod+d exec rofi -show drun -show-icons 
 
 bindsym XF86KbdBrightnessUp exec --no-startup-id "xbacklight -inc 10"
 bindsym XF86KbdBrightnessDown exec --no-startup-id "xbacklight -dec 10"

@@ -34,10 +34,13 @@ window:
   dynamic_padding: true
 
 font:
-  size: 13
+  size: 12
   normal:
-    family: Monofur Nerd Font Mono
+    family: FiraCode Nerd Font Mono
+    style: SemiBold
   bold:
-    family: Monofurbold Nerd Font Mono
+    family: FiraCode Nerd Font Mono
+    style: Bold
   italic:
-    family: Monofurbold Nerd Font
+    family: FiraCode Nerd Font Mono
+    style: Italic

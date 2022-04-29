@@ -9,18 +9,11 @@
 ;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
 ;
 ;
-;   To learn more about how to configure Polybar
-;   go to https://github.com/polybar/polybar
-;
-;   The README contains a lot of information
-;
 ;==========================================================
 
 [colors]
 background = #2E3440
-background-alt = #434C5E
-foreground = #dfdfdf
-foreground-alt = #D8DEE9
+foreground = #D8DEE9
 primary = #EBCB8B
 secondary = #D08770
 alert = #BF616A
@@ -35,70 +28,36 @@ fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 0
-
-border-size = 0
-border-color = #00000000
-
-padding-left = 0
-padding-right = 0
-
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = Fira Code Nerd Font:size=9:weight=150:antialias=true
+font-0 = Fira Code Nerd Font:size=9:weight=150:antialias=true;2
+font-1 = Fira Code Nerd Font:size=10:weight=150:antialias=true;1
 
 modules-left = i3
 modules-center = 
-modules-right = filesystem memory cpu xkeyboard wlan pulseaudio date battery powermenu
+modules-right = filesystem sep memory sep cpu sep xkeyboard sep wlan sep pulseaudio sep date sep battery sep powermenu
 
 tray-position = right
-tray-padding = 2
 
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
+# ======================= CUSTOM MODULES ======================= 
+[module/sep]
+type=custom/text
+content = %{T1}|%{T-}
 
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground}
-format-prefix-underline = ${colors.light}
-
-label-layout = %layout%
-label-layout-underline = ${colors.light}
-
-[module/filesystem]
-type = internal/fs
-interval = 25
-
-mount-0 = /
-
-label-mounted =   %percentage_used%%
-
-label-mounted-background = ${colors.background}
-label-mounted-foreground = ${colors.foreground-alt}
-
-label-mounted-underline = ${colors.light}
-
-
+# ======================= MODULES ======================= 
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
 
-; Only show workspaces on the same output as the bar
-;pin-workspaces = true
-
-label-mode-padding = 2
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
-
 ; focused = Active workspace on focused monitor
 label-focused = %index%
-label-focused-background = ${colors.foreground-alt}
+label-focused-background = ${colors.foreground}
 label-focused-foreground = ${colors.background}
 label-focused-underline= ${colors.primary}
 label-focused-padding = 2
@@ -121,10 +80,28 @@ label-urgent-padding = 2
 ; Separator in between workspaces
 ; label-separator = |
 
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = %{T2} %{T-}
+format-prefix-foreground = ${colors.foreground}
+
+label-layout = %layout%
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = "%{T2} %{T-} STR %percentage_used%%"
+label-mounted-foreground = ${colors.foreground}
+
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " CPU"
+format-prefix = "%{T2}%{T-} CPU "
 format-prefix-foreground = ${colors.foreground}
 format-underline = ${colors.light}
 label = %percentage:2%%
@@ -132,7 +109,7 @@ label = %percentage:2%%
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " MEM "
+format-prefix = "%{T2}%{T-} MEM "  
 format-prefix-foreground = ${colors.foreground}
 format-underline = ${colors.light}
 label = %percentage_used%%
@@ -146,13 +123,9 @@ format-connected = <ramp-signal> <label-connected>
 format-connected-underline = ${colors.light} 
 label-connected = %essid%
 
-format-disconnected = 
+format-disconnected = "%{T2}%{T-}"
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
+ramp-signal-0 = "%{T2}%{T-}"
 ramp-signal-foreground = ${colors.foreground}
 
 
@@ -166,7 +139,7 @@ date-alt = " %Y.%m.%d"
 time = %H:%M
 time-alt = %H:%M:%S
 
-format-prefix = 
+format-prefix = "%{T2}%{T-}"
 format-prefix-foreground = ${colors.foreground}
 format-underline = ${colors.light}
 
@@ -175,12 +148,12 @@ label = %date% %time%
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = 墳 <label-volume> 
+format-volume = %{T2}墳%{T-} <label-volume> 
 label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
 format-volume-underline = ${colors.light}
 
-label-muted = 婢 Muted
+label-muted = %{T2}婢%{T-} Muted
 label-muted-foreground = ${colors.foreground}
 label-muted-underline = ${colors.light}
 
@@ -196,52 +169,26 @@ format-charging-underline = ${colors.foreground}
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix = "  "
-format-full-prefix-foreground = ${colors.foreground-alt}
+format-full-prefix = "%{T2}%{T-}  "
+format-full-prefix-foreground = ${colors.foreground}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
+ramp-capacity-0 = %{T2}%{T-}
+ramp-capacity-1 = %{T2}%{T-}
+ramp-capacity-2 = %{T2}%{T-}
+ramp-capacity-3 = %{T2}%{T-}
+ramp-capacity-4 = %{T2}%{T-}
+ramp-capacity-foreground = ${colors.foreground}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
+animation-charging-0 = %{T2}%{T-}
+animation-charging-1 = %{T2}%{T-}
+animation-charging-2 = %{T2}%{T-}
+animation-charging-3 = %{T2}%{T-}
+animation-charging-4 = %{T2}%{T-}
 animation-charging-framerate = 450
 
 [module/powermenu]
 type = custom/menu
-
-expand-right = true
-
-format-spacing = 1
-
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
-
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
 
 
 

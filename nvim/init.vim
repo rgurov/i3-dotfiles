@@ -27,6 +27,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Git
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter/'
 
 " Prettier
 Plug 'prettier/vim-prettier'
@@ -65,10 +66,23 @@ if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
   let g:coc_global_extensions += ['coc-eslint']
 endif
 
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 " Nerd tree settings
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeAutoDeleteBuffer = 1
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
 
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeIgnore = ['^node_modules$']
@@ -99,7 +113,6 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 map <Leader> <Plug>(easymotion-prefix)
 
 colorscheme nord
-set guifont=FiraCodeNerdFont
 
 syntax on 
 
@@ -115,6 +128,7 @@ set autoindent
 set number
 set relativenumber
 
+set guifont=FiraCode\ Nerd\ Font:h7
 set t_Co=256
 set incsearch
 set nu 
